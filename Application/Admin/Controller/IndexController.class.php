@@ -1,11 +1,10 @@
 <?php
 namespace Admin\Controller;
 use Think\Controller;
-class IndexController extends Controller 
+class IndexController extends AuthController 
 {
     public function index()
     {
-    	echo C('test');
-		exit('Backend');
+    	$this->display('index');
     }
 }
