@@ -27,85 +27,24 @@ function ZtreeClick(event, treeId, treeNode) {
     var $detail = $('#ztree-detail')
     
     if ($detail.attr('tid') == treeNode.tId) return
-	if (treeNode.name) $('#j_menu_name').val(treeNode.name)
-	if (treeNode.url) {
-		$('#j_menu_url').val(treeNode.url)
+	if (treeNode.name) $('#name').val(treeNode.name)
+	if (treeNode.sort) {
+		$('#sort').val(treeNode.sort)
 	} else {
-		$('#j_menu_url').val('')
+		$('#sort').val('0')
 	}
-	if (treeNode.tabid) {
-		$('#j_menu_tabid').val(treeNode.tabid)
+	if (treeNode.id) {
+		$('#id').val(treeNode.id)
 	} else {
-		$('#j_menu_tabid').val('')
+		$('#id').val('')
 	}
-	if (treeNode.target) {
-		$('#j_menu_target').selectpicker('val', treeNode.target)
+	if (treeNode.parent_id) {
+		$('#parent_id').val(treeNode.parent_id)
 	} else {
-		$('#j_menu_target').selectpicker('val', '')
-	}
+		$('#parent_id').val('0')
+	}	
 	$detail.attr('tid', treeNode.tId)
     $detail.show()
-}
-//保存属性
-function M_Ts_Menu() {
-	var zTree  = $.fn.zTree.getZTreeObj("ztree1")
-	var name   = $('#j_menu_name').val()
-	var url    = $('#j_menu_url').val()
-	var tabid  = $('#j_menu_tabid').val()
-	var target = $('#j_menu_target').val()
-	
-	if ($.trim(name).length == 0) {
-		alertMsg.error('菜单名称不能为空！')
-		return;
-	}
-	var upNode = zTree.getSelectedNodes()[0]
-	
-	if (!upNode) {
-		alertMsg.error('未选中任何菜单！')
-        return
-	}
-	upNode.name   = name
-	upNode.url    = url
-	upNode.tabid  = tabid
-	upNode.target = target
-	zTree.updateNode(upNode)
-}
-//
-function M_BeforeNodeDrag(treeId, treeNodes) {
-    var $log = $('#ztree-log')
-    $log.val('开始拖拽：'+ treeNodes[0].name +'！\n'+ $log.val())
-    return true
-}
-//监听拖拽事件
-function M_BeforeNodeDrop(treeId, treeNodes, targetNode, moveType, isCopy) {
-    /*禁止插入层级为2的节点*/
-    if (moveType == 'inner' && targetNode.level == 2) {
-        return false
-    }
-    /*禁止插入剩余层级不足的子节点*/
-    if (moveType == 'inner' && treeNodes[0].isParent) {
-        var molevel = 2 - targetNode.level //剩余层级
-        var maxlevel = 1
-        var zTree = $.fn.zTree.getZTreeObj("ztree1")
-        var nodes = zTree.transformToArray(treeNodes)
-        var level = nodes[0].level
-        
-        for (var i = 1; i < nodes.length; i++) {
-            if (nodes[i].level == (level + 1)) {
-                maxlevel++
-                level++
-            }
-        }
-        if (maxlevel > molevel) {
-            return false
-        }
-    }
-    return true
-}
-//拖拽结束事件
-function M_NodeDrop(event, treeId, treeNodes, targetNode, moveType, isCopy) {
-    var $log = $('#ztree-log')
-    $log.val('拖拽结束！\n'+ $log.val())
 }
 //删除前事件
 function M_BeforeRemove(treeId, treeNode) {
@@ -117,17 +56,6 @@ function M_BeforeRemove(treeId, treeNode) {
 function M_NodeRemove(event, treeId, treeNode) {
     var $log = $('#ztree-log')
     $log.val('删除成功！\n'+ $log.val())
-}
-//自定义DOM
-function M_AddDiyDom(treeId, treeNode) {
-    var aObj = $('#' + treeNode.tId + '_a')
-    
-	if ($('#diyBtn_'+ treeNode.id).length > 0) return
-	aObj.append('<button type="button" class="diyBtn1" id="diyBtn_' + treeNode.id +'" title="'+ treeNode.name +'" onfocus="this.blur();"><i class="fa fa-plane"></i></button>')
-	$('#diyBtn_'+ treeNode.id).bind('click', function() {$(this).alertmsg('info', (treeNode.name +' 的飞机！'))})
-}
-function returnJSON() {
-    return [{"id":1,"pid":0,"faicon":"rss","faiconClose":"cab","name":"表单元素","level":0,"tId":"ztree1_1","parentTId":null,"open":false,"isParent":false,"zAsync":true,"isFirstNode":true,"isLastNode":false,"isAjaxing":false,"checked":false,"checkedOld":false,"nocheck":false,"chkDisabled":false,"halfCheck":false,"check_Child_State":-1,"check_Focus":false,"isHover":false,"editNameFlag":false},{"id":10,"pid":1,"url":"form-button.html","tabid":"form-button","faicon":"bell","pId":1,"name":"按钮","level":0,"tId":"ztree1_2","parentTId":null,"open":false,"isParent":false,"zAsync":true,"isFirstNode":false,"isLastNode":false,"isAjaxing":false,"checked":false,"checkedOld":false,"nocheck":false,"chkDisabled":false,"halfCheck":false,"check_Child_State":-1,"check_Focus":false,"isHover":false,"editNameFlag":false},{"id":11,"pid":1,"url":"form-input.html","tabid":"form-input","faicon":"info-circle","pId":1,"name":"文本框","level":0,"tId":"ztree1_3","parentTId":null,"open":false,"isParent":false,"zAsync":true,"isFirstNode":false,"isLastNode":false,"isAjaxing":false,"checked":false,"checkedOld":false,"nocheck":false,"chkDisabled":false,"halfCheck":false,"check_Child_State":-1,"check_Focus":false,"isHover":false,"editNameFlag":false},{"id":12,"pid":1,"url":"form-select.html","tabid":"form-select","faicon":"ellipsis-v","pId":1,"name":"下拉选择框","level":0,"tId":"ztree1_4","parentTId":null,"open":false,"isParent":false,"zAsync":true,"isFirstNode":false,"isLastNode":false,"isAjaxing":false,"checked":false,"checkedOld":false,"nocheck":false,"chkDisabled":false,"halfCheck":false,"check_Child_State":-1,"check_Focus":false,"isHover":false,"editNameFlag":false},{"id":13,"pid":1,"url":"form-checkbox.html","tabid":"table","faicon":"soccer-ball-o","pId":1,"name":"复选、单选框","level":0,"tId":"ztree1_5","parentTId":null,"open":false,"isParent":false,"zAsync":true,"isFirstNode":false,"isLastNode":false,"isAjaxing":false,"checked":false,"checkedOld":false,"nocheck":false,"chkDisabled":false,"halfCheck":false,"check_Child_State":-1,"check_Focus":false,"isHover":false,"editNameFlag":false},{"id":14,"pid":1,"url":"form.html","tabid":"form","faicon":"comments","pId":1,"name":"表单综合演示","level":0,"tId":"ztree1_6","parentTId":null,"open":false,"isParent":false,"zAsync":true,"isFirstNode":false,"isLastNode":false,"isAjaxing":false,"checked":false,"checkedOld":false,"nocheck":false,"chkDisabled":false,"halfCheck":false,"check_Child_State":-1,"check_Focus":false,"isHover":false,"editNameFlag":false},{"id":2,"pid":0,"name":"表格","level":0,"tId":"ztree1_7","parentTId":null,"open":false,"isParent":false,"zAsync":true,"isFirstNode":false,"isLastNode":false,"isAjaxing":false,"checked":false,"checkedOld":false,"nocheck":false,"chkDisabled":false,"halfCheck":false,"check_Child_State":-1,"check_Focus":false,"isHover":false,"editNameFlag":false},{"id":20,"pid":2,"url":"table.html","tabid":"table","faicon":"signal","pId":2,"name":"普通表格","level":0,"tId":"ztree1_8","parentTId":null,"open":false,"isParent":false,"zAsync":true,"isFirstNode":false,"isLastNode":false,"isAjaxing":false,"checked":false,"checkedOld":false,"nocheck":false,"chkDisabled":false,"halfCheck":false,"check_Child_State":-1,"check_Focus":false,"isHover":false,"editNameFlag":false},{"id":21,"pid":2,"url":"table-fixed.html","tabid":"table-fixed","faicon":"rss-square","pId":2,"name":"固定表头表格","level":0,"tId":"ztree1_9","parentTId":null,"open":false,"isParent":false,"zAsync":true,"isFirstNode":false,"isLastNode":false,"isAjaxing":false,"checked":false,"checkedOld":false,"nocheck":false,"chkDisabled":false,"halfCheck":false,"check_Child_State":-1,"check_Focus":false,"isHover":false,"editNameFlag":false},{"id":22,"pid":2,"url":"table-edit.html","tabid":"table-edit","faicon":"bookmark-o","pId":2,"name":"可编辑表格","level":0,"tId":"ztree1_10","parentTId":null,"open":false,"isParent":false,"zAsync":true,"isFirstNode":false,"isLastNode":true,"isAjaxing":false,"checked":false,"checkedOld":false,"nocheck":false,"chkDisabled":false,"halfCheck":false,"check_Child_State":-1,"check_Focus":false,"isHover":false,"editNameFlag":false}]
 }
 </script>
 <div class="bjui-pageContent">
@@ -141,42 +69,29 @@ function returnJSON() {
                     }"
                 >
 				<volist name="category" id="c">
-					<li data-id="{$c.id}" data-pid="0" data-faicon="rss" data-add-hover-dom="edit" data-remove-hover-dom="edit">{$c.name}{$c.id}</li>
-					<present name="c.child">
-						<volist name="c.child" id="child">
-						<li data-id="{$child.id}" data-pid="{$c.id}" data-faicon="rss" data-add-hover-dom="edit" data-remove-hover-dom="edit">{$child.name}{$child.id}</li>
-						</volist>
-					</present>
+					<li data-id="{$c.id}" data-sort="{$c.sort}" data-pid="{$c.parent_id}" <if condition="$c['parent_id'] eq 0 ">data-add-hover-dom="edit" data-remove-hover-dom="edit" </if>>{$c.name}</li>
 				</volist>
                 </ul>
             </div>
-            <div id="ztree-detail" style="display:none; margin-left:230px; width:300px; height:240px;">
+            <div id="ztree-detail" style="display:block; margin-left:230px; width:300px; height:240px;">
+			<form action="{:U('Article/editcategory')}" data-toggle="validate">
                 <div class="bs-example" data-content="详细信息">
+					<input type="hidden" name="id" id="id" value="0" />
+					<input type="hidden" name="parent_id" id="parent_id" value="0" />
                     <div class="form-group">
-                        <label for="j_menu_name" class="control-label x85">菜单名称：</label>
-                        <input type="text" class="form-control validate[required] required" name="m.name" id="j_menu_name" size="15" placeholder="名称" />
+                        <label for="name" class="control-label x85">分类名称：</label>
+                        <input type="text" class="form-control validate[required] required" data-rule="required" name="name" id="name" size="15" placeholder="分类名称" />
                     </div>
                     <div class="form-group">
-                        <label for="j_menu_url" class="control-label x85">URL：</label>
-                        <input type="text" class="form-control" name="m.url" id="j_menu_url" size="15" placeholder="Url" />
-                    </div>
-                    <div class="form-group">
-                        <label for="j_menu_tabid" class="control-label x85">tabid：</label>
-                        <input type="text" class="form-control" name="m.tabid" id="j_menu_tabid" size="15" placeholder="tabid" />
-                    </div>
-                    <div class="form-group">
-                        <label for="j_menu_target" class="control-label x85">target：</label>
-                        <select class="selectpicker show-tick" id="j_menu_target" data-style="btn-default btn-sel" data-width="auto">
-                            <option value=""></option>
-                            <option value="navTab">navTab</option>
-                            <option value="dialog">dialog</option>
-                        </select>
+                        <label for="sort" class="control-label x85">排序值：</label>
+                        <input type="text" class="form-control" name="sort" id="sort" size="15" placeholder="排序值" />
                     </div>
                     <div class="form-group" style="padding-top:8px; border-top:1px #DDD solid;">
                         <label class="control-label x85"></label>
-                        <button class="btn btn-green" onclick="M_Ts_Menu();">更新菜单</button>
+                        <button class="btn btn-green" type="submit">更新菜单</button>
                     </div>
                 </div>
+			</form>
             </div>
         </div>
     </div>

@@ -8,4 +8,17 @@ class AuthController extends Controller
     	parent::__construct();
     }
     
+    protected function showerror($message,$id = 300)
+    {
+    	$data['statusCode'] = $id;
+    	$data['message'] = $message;
+    	$this->ajaxReturn($data);
+    }
+    
+    protected function showok($message,$id=200)
+    {
+    	$data['statusCode'] = $id;
+    	$data['message'] = $message;
+    	$this->ajaxReturn($data);
+    }
 }

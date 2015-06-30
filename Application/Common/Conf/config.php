@@ -10,4 +10,6 @@ return array(
 	'DB_CHARSET'=> 'utf8', // 字符集
 
 	'SHOW_PAGE_TRACE' =>true,
+	'LOG_RECORD' => true, // 开启日志记录
+	'LOG_LEVEL'  =>'EMERG,ALERT,CRIT,ERR,DEBUG', // 只记录EMERG ALERT CRIT ERR 错误		
 );

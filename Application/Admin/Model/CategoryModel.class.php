@@ -13,15 +13,18 @@ class CategoryModel extends Model
 	
 	public function getAllTree()
 	{
-		$ALL = $this->m->select();
-		$result = array();
-		foreach($ALL as $r){
-			if ($r['parent_id'] == 0){
-				$result[$r['id']] = $r;
-			} else {
-				$result[$r['parent_id']]['child'][] = $r;
-			}	
-		}
+		$result = $this->m->order('sort asc')->select();
+
 		return $result;
+	}
+	
+	public function setCategory($id,$data)
+	{
+		return $this->m->where("id = {$id}")->save($data);
+	}
+	
+	public function addCategory($data)
+	{
+		return $this->m->add($data);
 	}
 }
