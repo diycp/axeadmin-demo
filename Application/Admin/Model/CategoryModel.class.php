@@ -27,4 +27,8 @@ class CategoryModel extends Model
 	{
 		return $this->m->add($data);
 	}
+	public function del($id)
+	{
+		return $this->m->where("id = {$id}")->delete($id);
+	}
 }

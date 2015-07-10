@@ -13,11 +13,14 @@ class ArticleController extends AuthController
     {
     	$d = D('Category');
     	$category = $d->getAllTree();
-    	$this->assign('category',$category);
+    	$this->assign('data',$category);
     	$this->display('category');
     }
-    
-    public function editcategory()
+    public function addcategory()
+    {
+    	$this->display('addcategory');
+    }
+    public function updatecategory()
     {
     	$data['name'] = htmlspecialchars(I('post.name'));
     	$data['sort'] = I('post.sort',0,'int');
@@ -43,8 +46,24 @@ class ArticleController extends AuthController
     		}
     		$this->showok('新增分类成功');
     	}
-    		
-
+    }
+    public function delcategory()
+    {
+    	$id = I('get.id',0,'int');
+    	if(empty($id))
+    	{
+    		$this->showerror('出现错误，请稍后再试');
+    	}
+    	$categoryModel = D('category');
+    	$result = $categoryModel->del($id);
+    	if(false === $result)
+    	{
+    		$this->showerror('出现错误，请稍后再试');
+    	}
+    	else 
+    	{
+    		$this->showok('删除成功');
+    	}
     }
     public function test()
     {
