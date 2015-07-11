@@ -244,9 +244,9 @@ $(function(){
                         <div class="items hide" data-noinit="true">
                             <ul id="bjui-hnav-tree1" class="ztree ztree_main" data-toggle="ztree" data-on-click="MainMenuClick" data-expand-all="true" data-faicon="check-square-o">
                                 <li data-id="1" data-pid="0" data-faicon="folder-open-o" data-faicon-close="folder-o">文章管理</li>
-                                <li data-id="10" data-pid="1" data-url="{:U('Article/index')}" >文章列表</li>
-                                <li data-id="10" data-pid="1" data-url="{:U('Article/category')}" >文章分类</li>
-                                <li data-id="11" data-pid="1" data-url="form-input.html" data-tabid="form-input" >文本框</li>
+                                <li data-id="10" data-tabid="10" data-pid="1" data-url="{:U('Article/index')}" data-options="{id:'datagrid-convertable', faicon:'table'}" >文章列表</li>
+                                <li data-id="11" data-tabid="11" data-pid="1" data-url="{:U('Article/category')}" data-options="{id:'datagrid-convertable2', faicon:'table'}" >文章分类</li>
+                                <li data-id="12" data-tabid="10" data-pid="1" data-url="form-input.html" data-tabid="form-input" >文本框</li>
                             </ul>
                         </div>
                     </li>
