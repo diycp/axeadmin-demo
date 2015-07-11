@@ -1,0 +1,63 @@
+<script src="__PUBLIC__/bjui/BJUI/plugins/treeTable/treeTable.js"></script>
+<link href="__PUBLIC__/bjui/BJUI/plugins/treeTable/treeTable.css" rel="stylesheet">
+
+<script>
+$(function(){
+    var option = {
+        expandLevel : 5,
+    };
+    $('#treeTable').treeTable(option);
+});
+</script>
+<div class="bjui-pageHeader">
+	<div class="pull-right">
+	<button type="button" class="btn btn-blue" data-toggle="dialog" data-id="mydialog2" data-url="{:U('Category/add')}" data-title="添加分类"><i class="fa fa-plus"></i> 新建分类</button>
+	</div>
+</div>
+<div class="bjui-pageContent tableContent">
+    <table class="table table-bordered table-hover table-striped table-top" data-selected-multi="true" id="treeTable">
+        <thead>
+            <tr>
+                <th>名称</th>
+				
+                <th>创建时间</th>
+                <th>排序值</th>
+                <th>是否显示</th>
+                <th width="100">操作</th>
+            </tr>
+        </thead>
+        <tbody>
+			<volist name="data" id="a">
+            <tr id="{$a.id}" pId="{$a.parent_id}">
+                <td><span controller="true">{$a.name}</span></td>
+                <td>{:date('Y-m-d H:i:s',$a['createtime'])}</td>
+                <td>{$a.sort}</td>
+                <td><eq name="a.is_use" value="1"> <i class="fa fa-check"></i>可用<else /> <i class="fa fa-close"></i>不可用</eq></td>
+                <td>
+                    <a href="{:U('Category/add?id='.$a['id'])}" class="btn btn-green" data-id="dialog-mask" data-mask="true" data-toggle="dialog" "  data-title="编辑-{$a.name}">编辑</a>
+                    <a href="{:U('Category/delajax?id='.$a['id'])}" class="btn btn-red" data-toggle="doajax" data-confirm-msg="确定要删除该行信息吗？">删</a>
+                </td>
+            </tr>
+			</volist>
+        </tbody>
+    </table>
+</div>
+<div class="bjui-pageFooter">
+    <div class="pages">
+        <span>每页&nbsp;</span>
+        <div class="selectPagesize">
+            <select data-toggle="selectpicker" data-toggle-change="changepagesize">
+                <option value="30">30</option>
+                <option value="60">60</option>
+                <option value="120">120</option>
+                <option value="150">150</option>
+            </select>
+        </div>
+        <span>&nbsp;条，共 600 条</span>
+    </div>
+    <div class="pagination-box" data-toggle="pagination" data-total="600" data-page-size="30" data-page-current="1">
+    </div>
+</div>
+<script>
+$('.selectpicker').selectpicker('val', '可用');
+</script>
