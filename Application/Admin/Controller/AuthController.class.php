@@ -16,10 +16,11 @@ class AuthController extends Controller
     	$this->ajaxReturn($data);
     }
     
-    protected function showok($message,$id=200)
+    protected function showok($message,$closeCurrent=true,$id=200)
     {
     	$data['statusCode'] = $id;
     	$data['message'] = $message;
+    	$data['closeCurrent'] = true;
     	$this->ajaxReturn($data);
     }
 }

@@ -17,8 +17,8 @@ $debug = array();
 if(APP_DEBUG)
 {
 	$debug = array(
-			'SHOW_PAGE_TRACE' =>true,
-			'LOG_RECORD' => true, // 开启日志记录
+			'SHOW_PAGE_TRACE' =>false,
+			'LOG_RECORD' => false, // 开启日志记录
 			'LOG_LEVEL'  =>'EMERG,ALERT,CRIT,ERR,DEBUG', // 只记录EMERG ALERT CRIT ERR 错误
 	);	
 }
