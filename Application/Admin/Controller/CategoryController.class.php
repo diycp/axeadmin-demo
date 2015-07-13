@@ -51,14 +51,14 @@ class CategoryController extends AuthController
 			{
 				$this->showerror('未知错误');
 			}
-			$this->showok('更新成功');
+			$this->showok('更新成功',true);
 		} else {
 			$result = $categoryModel->addCategory($data);
 			if(false === $result)
 			{
 				$this->showerror('未知错误');
 			}
-			$this->showok('新增分类成功');
+			$this->showok('新增分类成功',true);
 		}
 	}
 	public function delajax()

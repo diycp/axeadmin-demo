@@ -11,7 +11,7 @@
                         </tr>
                         <tr>
 							<td><label for="parent_id" class="control-label x85">上级分类：</label>
-						    <input type="text" name="parent_id" id="parent_id_father" data-toggle="selectztree" data-rule="required" size="18" data-tree="#parent_id" value="{$data.parent_id}">
+						    <input type="text" name="parent_id" id="parent_id_father" data-toggle="selectztree" data-title="--tlt--" data-rule="required" size="18" data-tree="#parent_id" value=<empty name='data.parent_id'>"--请选择上级分类--"<else />"{$data.parent_id}"</empty> readonly>
                             <ul id="parent_id" class="ztree hide" data-toggle="ztree" data-expand-all="true" data-check-enable="true" data-chk-style="radio" data-radio-type="all" data-on-check="S_NodeCheck" >
 								<volist name="allcategory" id="a">
 								<if condition="$a.id neq $data['id']">
