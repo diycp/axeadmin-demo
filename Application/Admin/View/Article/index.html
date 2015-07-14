@@ -23,9 +23,10 @@
     <table class="table table-bordered table-hover table-striped table-top" data-selected-multi="true">
         <thead>
             <tr>
+                <th width="40" >缩略图</th>
                 <th >标题</th>
                 <th >所属分类</th>
-                <th>登记时间</th>
+                <th>发布时间</th>
                 <th>是否可用</th>
                 <th width="100">操作</th>
             </tr>
@@ -33,6 +34,7 @@
         <tbody>
 		<volist name="article.data" id="a">
             <tr >
+                <td><empty name="a.s_picurl"><img class="img-circle" src="__PUBLIC__/axe/no.png" /><else /><a href="{$a.picurl}" ></a><img class="img-circle" src="{$a.s_picurl}" width="100" /></a></empty></td>
                 <td class="datagrid-linenumber-td"><div>{$a.title}</div></td>
                 <td>{$a.cname}</td>
                 <td>{:date('Y-m-d H:i:s',$a['createtime'])}</td>

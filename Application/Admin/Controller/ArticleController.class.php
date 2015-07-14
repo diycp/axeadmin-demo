@@ -37,7 +37,25 @@ class ArticleController extends AuthController
 		$this->assign('page',$page);
 		$this->display();
     }    
-    
+    public function add()
+    {
+    	$id = I('get.id',0,'int');
+    	$articleModel = D('article');
+    	$categoryModel = D('category');
+    	if($id)
+    	{
+    		//新增
+    		$data = $articleModel->getOne($id);
+    		$this->assign('data',$data);
+    	}
+    	//所有文类
+    	$Allcategory = $categoryModel->getAllTree();
+    	Vendor('AXE.tree.tree');
+    	$tree = New \Tree($Allcategory);
+    	$Allcategory = $tree->getArray();
+    	$this->assign('allcategory',$Allcategory);
+    	$this->display('add');
+    }    
     public function delajax()
     {
     	$id = I('get.id',0,'int');
