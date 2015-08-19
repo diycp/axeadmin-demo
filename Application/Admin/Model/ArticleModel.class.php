@@ -30,6 +30,16 @@ class ArticleModel extends Model
 		return $return;
 	}
 	
+	public function setOne($id,$data)
+	{
+		return $this->m->where("id = {$id}")->save($data);
+	}
+	
+	public function addOne($data)
+	{
+		return $this->m->add($data);
+	}
+	
 	public function del($id)
 	{
 		return $this->m->where("id = {$id}")->delete($id);

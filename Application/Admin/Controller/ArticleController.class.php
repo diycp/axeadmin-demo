@@ -55,7 +55,67 @@ class ArticleController extends AuthController
     	$Allcategory = $tree->getArray();
     	$this->assign('allcategory',$Allcategory);
     	$this->display('add');
-    }    
+    } 
+	public function saveajax()
+	{
+		$id = I('post.id',0,'int');
+		$data['title'] = I('post.title');
+		$data['c_id'] = I('post.c_id',0,'int');
+		$data['is_use'] = I('post.is_use',0,'int');
+		$data['keyword'] = I('post.keyword');
+		$data['desc'] = I('post.desc');
+		$data['content'] = I('post.content');
+		$data['picurl'] = I('post.picurl');
+		$data['is_top'] = I('post.is_top');
+		$data['createtime'] = NOW_TIME;
+		//生成缩略图
+		if($data['picurl']) {
+			$image = new \Think\Image();
+			$image->open($_SERVER['DOCUMENT_ROOT'].$data['picurl']);
+			$path = dirname($data['picurl']).'/thumb/';
+			
+			if(!file_exists($_SERVER['DOCUMENT_ROOT'].$path)) {
+				mkdir($_SERVER['DOCUMENT_ROOT'].$path);
+			}
+			$data['s_picurl'] = $path.basename($data['picurl']);
+			$image->thumb(100,100)->save($_SERVER['DOCUMENT_ROOT'].$data['s_picurl']);
+		} else {
+			unset($data['picurl']);
+		}
+		
+		$ArticleModel = D('article');
+		if ($id) {
+			$result = $ArticleModel->setOne($id,$data);
+			if(false === $result) {
+				$this->showerror('未知错误');
+			}
+			$this->showok('更新成功',true);
+		} else {
+			$result = $ArticleModel->addOne($data);
+			if(false === $result) {
+				$this->showerror('未知错误');
+			}
+			$this->showok('新建成功',true);
+		}
+	}  
+	public function picajax()
+	{
+		$data = array(
+				'message' => 'ok',
+				'status' =>	'200',
+		);
+				$upload = new \Think\Upload();// 实例化上传类
+		$upload->savePath ='Uploads/article/'; 
+		$upload->rootPath = './';
+		
+		if(!$info = $upload->upload()) {
+			$data['message'] = $upload->getError();
+		} else {
+			$data['filename'] = '/'.$info['file']['savepath'].$info['file']['savename'];
+		}
+		
+		$this->ajaxReturn($data);
+	} 
     public function delajax()
     {
     	$id = I('get.id',0,'int');

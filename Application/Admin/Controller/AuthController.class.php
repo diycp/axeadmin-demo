@@ -6,9 +6,6 @@ class AuthController extends Controller
     public function __construct()
     {
     	parent::__construct();
-    	trace($_GET,'GET');
-    	trace($_POST,'POST');
-    	trace($_COOKIE,'COOKIE');
     }
     
     protected function showerror($message,$id = 300)

@@ -1,71 +1,67 @@
-<script type="text/javascript">
-function pic_upload_success(file, data) {
-    var json = $.parseJSON(data)
-    
-    $(this).bjuiajax('ajaxDone', json)
-    if (json[BJUI.keys.statusCode] == BJUI.statusCode.ok) {
-        $('#j_custom_pic').val(json.filename).trigger('validate')
-        $('#j_custom_span_pic').html('<img src="'+ json.filename +'" width="100" />')
-    }
-}
-function do_OK(json, $form) {
-    console.log(json)
-    console.log($form)
-}
-//护照有效日期  = 签发日期 + 10年
-$('#j_custom_issuedate').on('afterchange.bjui.datepicker', function(e, data) {
-    var pattern = 'yyyy-MM-dd'
-    var start   = end = data.value
-    
-    end.setFullYear(start.getFullYear() + 10)
-    end.setDate(start.getDate() - 1)
-    
-    $('#j_custom_indate').val(end.formatDate(pattern))
-})
-</script>
 <div class="bjui-pageContent">
-    <form action="ajaxDone2.html" id="j_custom_form" data-toggle="validate" data-alertmsg="false">
-        <input type="hidden" name="custom.id" value="edce142bc2ed4ec6b623aacaf602a4de">
+    <form action="{:U('Article/saveajax')}" id="addForm" class="pageForm" data-toggle="validate" data-reload-navtab="true">
+        <input type="hidden" id="pk" name="id" value="{$data.id}">
         <table class="table table-condensed table-hover" width="100%">
             <tbody>
                 <tr>
-                    <td>
-                        <label for="j_custom_sale" class="control-label x85">所属业务：</label>
-                        <select name="custom.sale" id="j_custom_sale" data-toggle="selectpicker" data-rule="required">
-                            <option value="">全部</option>
-                            <option value="1">业务1</option>
-                            <option value="2">业务2</option>
-                        </select>
-                    </td>
-                    <td >
-                        <label class="control-label x85">客人照片：</label>
-                        <div style="display: inline-block; vertical-align: middle;">
-                            <div id="j_custom_pic_up" data-toggle="upload" data-uploader="ajaxUpload.html?sessionid=?" 
-                                data-file-size-limit="1024000000"
-                                data-file-type-exts="*.jpg;*.png;*.gif;*.mpg"
-                                data-multi="true"
-                                data-on-upload-success="pic_upload_success"
-                                data-icon="cloud-upload"></div>
-                            <input type="hidden" name="custom.pic" value="" id="j_custom_pic">
-                            <span id="j_custom_span_pic"></span>
-                        </div>
+                    <td colspan="2">
+                        <label class="control-label x100">标题：</label>
+                        <input id="title" type="text" name="title" value="{$data.title}" size="60" />
                     </td>
                 </tr>
-
                 <tr>
-                    <td colspan="4">
-                        <label for="j_custom_content" class="control-label x85">内容编辑：</label>
+                    <td>
+                        <label class="control-label x100">所属分类：</label>
+                        <select name="c_id" data-width="300">
+                            <volist name="allcategory" id="val">
+                                <option value="{$val.id}">{$val.name}</option>
+                            </volist>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <label class="control-label x100">关键词：</label>
+                        <input type="text" name="keyword" value="{$data.keyword}" placeholder="多关键词间用半角逗号分开" size="60" /> 多关键词间用半角逗号分开
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <label class="control-label x100">文章描述：</label>
+                        <textarea cols="60" name="desc" data-toggle="autoheight">{$data.desc}</textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <label class="control-label x100">封面缩略图：</label>
+						<div style="display:inline-block; vertical-align:middle;">
+							<div id="doc_pic_up" data-toggle="upload" data-uploader="{:U('Article/picajax')}" data-auto="true"
+								data-file-size-limit="1024000000"
+								data-file-type-exts="*.jpg;*.png;*.gif;*.mpg"
+								data-multi="false"
+								data-on-upload-success="doc_upload_success"
+								data-icon="cloud-upload"></div>
+							<input type="hidden" name="picurl" value="" id="doc_pic">
+						</div>
+						<span id="doc_span_pic">
+						<notempty name="data.picurl">
+						已上传图片：<img src="{$data.picurl}" width="100">
+						</notempty>
+						</span>
+                    </td>
+                </tr>
+				<tr>
+				    <td>
+                        <label class="control-label x100">发布状态：</label>
+                        <input type="radio" name="is_use" data-toggle="icheck" value="0" data-rule="checked" data-label="审核中&nbsp;&nbsp;" <if condition="$data.is_use eq 0">checked</if>>
+                        <input type="radio" name="is_use" data-toggle="icheck" value="1" data-label="已发布" <if condition="$data.is_use eq 1">checked</if>>
+                    </td>
+				</tr>
+                <tr>
+                    <td colspan="2">
+                        <label class="control-label x100">文章内容：</label>
                         <div style="display: inline-block; vertical-align: middle;">
-                            <textarea name="content" id="j_form_content" class="j-content" style="width: 700px;" data-toggle="kindeditor" data-minheight="200">
-                                <p><strong>HTML编辑器KindEditor：</strong></p>
-                                <p><strong>已优化：</strong></p>
-                                <ul>
-                                    <li>深度清理html标记</li>
-                                    <li>上传附件后，自动获取文件名（需要返回JSON属性"origin_name"）</li>
-                                    <li>修改一键排版为段落前空两个全角空格，主要考虑到某些行需要顶格时直接删除空格即可。</li>
-                                </ul>
-                                <p><br>更多参数请参见：<a href="http://kindeditor.net/" target="_blank">http://kindeditor.net/</a></p>
-                            </textarea>
+                            <textarea name="content" cols="100" rows="20" data-toggle="kindeditor">{$data.content}</textarea>
                         </div>
                     </td>
                 </tr>
@@ -73,9 +69,22 @@ $('#j_custom_issuedate').on('afterchange.bjui.datepicker', function(e, data) {
         </table>
     </form>
 </div>
+
 <div class="bjui-pageFooter">
     <ul>
-        <li><button type="button" class="btn-close" data-icon="close">取消</button></li>
+        <li><button type="button" class="btn-close" data-icon="close">关闭</button></li>
         <li><button type="submit" class="btn-default" data-icon="save">保存</button></li>
     </ul>
 </div>
+
+<script type="text/javascript">
+	//图片上传
+    function doc_upload_success(file, data) 
+	{
+        var json = $.parseJSON(data)
+            $('#doc_pic').val(json.filename)
+            $('#doc_span_pic').html('已上传图片：<img src="'+ json.filename +'" width="100">')
+    }
+
+
+</script>
