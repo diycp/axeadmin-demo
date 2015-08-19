@@ -9,20 +9,12 @@
 				<volist name="category" id="a">
 				<option value="{$a.id}" <eq name="a.id" value="$search['parent_id']">selected=""</eq> >{$a.name}</option>	
 				</volist>                
-<<<<<<< HEAD
             </select>
-=======
-            </select>&nbsp;
->>>>>>> 0b0d018bce4a3b9883bf1c20220515f49cb1c154
             <label>标题：</label><input type="text" id="customNo" value="{$search.title}" name="title" class="form-control" size="10">&nbsp;
             <button type="submit" class="btn-default" data-icon="search">查询</button>&nbsp;
             <a class="btn btn-orange" href="javascript:;" data-toggle="reloadsearch" data-clear-query="true" data-icon="undo">清空查询</a>
             <div class="pull-right">
-<<<<<<< HEAD
 			<button type="button" class="btn btn-blue" data-toggle="dialog" data-width="1200" data-height="700" data-id="mydialog2" data-url="{:U('Article/add')}" data-title="添加文章"><i class="fa fa-plus"></i> 新建文章</button>
-=======
-			<button type="button" class="btn btn-blue" data-toggle="dialog" data-id="mydialog2" data-url="{:U('Article/add')}" data-title="添加分类"><i class="fa fa-plus"></i> 新建文章</button>
->>>>>>> 0b0d018bce4a3b9883bf1c20220515f49cb1c154
             </div>
         </div>
     </form>
@@ -42,21 +34,13 @@
         <tbody>
 		<volist name="article.data" id="a">
             <tr >
-<<<<<<< HEAD
                 <td><empty name="a.s_picurl"><img class="img-circle" src="__PUBLIC__/axe/no.png" /><else /><a href="{$a.picurl}" ></a><img class="img-circle" src="{$a.s_picurl}" width="36" /></a></empty></td>
-=======
-                <td><empty name="a.s_picurl"><img class="img-circle" src="__PUBLIC__/axe/no.png" /><else /><a href="{$a.picurl}" ></a><img class="img-circle" src="{$a.s_picurl}" width="100" /></a></empty></td>
->>>>>>> 0b0d018bce4a3b9883bf1c20220515f49cb1c154
                 <td class="datagrid-linenumber-td"><div>{$a.title}</div></td>
                 <td>{$a.cname}</td>
                 <td>{:date('Y-m-d H:i:s',$a['createtime'])}</td>
 				<td><eq name="a.is_use" value="1"> <i class="fa fa-check"></i>可用<else /> <i class="fa fa-close"></i>不可用</eq></td>
                 <td>
-<<<<<<< HEAD
                     <a href="{:U('Article/add?id='.$a['id'])}" class="btn btn-green" data-toggle="dialog" data-id="{$a.title}{$a.id}" data-reload-warn="本页已有打开的内容，确定将刷新本页内容，是否继续？" data-title="编辑-{$a.title}" data-width="1200" data-height="700">编辑</a>
-=======
-                    <a href="{:U('Article/add?id='.$a['id'])}" class="btn btn-green" data-toggle="navtab" data-id="{$a.title}{$a.id}" data-reload-warn="本页已有打开的内容，确定将刷新本页内容，是否继续？" data-title="编辑-{$a.title}">编辑</a>
->>>>>>> 0b0d018bce4a3b9883bf1c20220515f49cb1c154
                     <a href="{:U('Article/delajax?id='.$a['id'])}" class="btn btn-red" data-toggle="doajax" data-confirm-msg="确定要删除该行信息吗？">删</a>
                 </td>
             </tr>
