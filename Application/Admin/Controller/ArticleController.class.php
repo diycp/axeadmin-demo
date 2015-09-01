@@ -104,7 +104,7 @@ class ArticleController extends AuthController
 				'message' => 'ok',
 				'status' =>	'200',
 		);
-				$upload = new \Think\Upload();// 实例化上传类
+		$upload = new \Think\Upload();// 实例化上传类
 		$upload->savePath ='Uploads/article/'; 
 		$upload->rootPath = './';
 		

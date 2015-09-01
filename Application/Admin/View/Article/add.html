@@ -61,7 +61,7 @@
                     <td colspan="2">
                         <label class="control-label x100">文章内容：</label>
                         <div style="display: inline-block; vertical-align: middle;">
-                            <textarea name="content" cols="100" rows="20" data-toggle="kindeditor">{$data.content}</textarea>
+                            <textarea name="content" cols="100" rows="20" data-toggle="kindeditor" data-uploadJson="{:U('Article/picajax')}">{$data.content}</textarea>
                         </div>
                     </td>
                 </tr>
@@ -85,6 +85,6 @@
             $('#doc_pic').val(json.filename)
             $('#doc_span_pic').html('已上传图片：<img src="'+ json.filename +'" width="100">')
     }
-
+	
 
 </script>
