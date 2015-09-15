@@ -1,0 +1,32 @@
+<div class="bjui-pageHeader">
+
+</div>
+<div class="bjui-pageContent tableContent">
+    <form action="ajaxDone2.html" id="j_custom_form" class="pageForm" data-toggle="validate" method="post">
+
+        <table id="tabledit1" class="table table-bordered table-hover table-striped table-top" data-toggle="tabledit" data-initnum="0" data-action="{:U('Admin/saveAdminAjax')}" data-single-noindex="true">
+            <thead>
+                <tr data-idname="id">
+                    <th title="账号"><input type="text" name="name" data-rule="required" ></th>
+                    <th title="密码"><input type="text" name="password" data-rule="required" ></th>
+                    <th title="描述"><input type="text" name="desc" data-rule="required" ></th>
+					<th title="操作" data-addtool="true" width="100">
+						<a href="javascript:;" class="btn btn-green" data-toggle="dosave">保存</a>
+					</th>
+                </tr>			
+            </thead>
+            <tbody>
+				<volist name="data.data" id="val">
+                <tr data-id="{$val.id}">
+                    <td data-val="{$val.name}">{$val.name}</td>
+                    <td data-val="{$val.password}">{$val.password}</td>
+                    <td data-val="{$val.desc}">{$val.desc}</td>
+					<td data-noedit="true">
+                        <button type="button" class="btn-green" data-toggle="doedit">编辑</button>
+                    </td>
+                </tr>
+				</volist>
+            </tbody>
+        </table>
+	</form>
+</div>
