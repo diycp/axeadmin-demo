@@ -79,8 +79,7 @@ $(function() {
 		$("#login_ok").attr("disabled", true).val('登陆中..');
 		var password = HMAC_SHA256_MAC($("#j_username").val(), $("#j_password").val());
 		$("#j_password").val(HMAC_SHA256_MAC($("#j_randomKey").val(), password));
-        window.location.href = 'index.html'; /*注意：生产环境时请删除此行*/
-        return false;
+        return true;
 	});
 });
 function genTimestamp(){
@@ -121,18 +120,15 @@ function choose_bg() {
         -->
         <div class="login_form">
             <input type="hidden" value="${randomKey }" id="j_randomKey" />
-    		<form action="index.html" id="login_form" method="post">
+    		<form action="{:U('Login')}" id="login_form" method="post">
                 <input type="hidden" name="jfinal_token" value="${jfinal_token }" />
     			<div class="form-group">
-    				<label for="j_username" class="t">用户名：</label> <input id="j_username" value="" name="username" type="text" class="form-control x319 in" autocomplete="off">
+    				<label for="j_username" class="t">用户名：</label> <input id="j_username" value="" name="name" type="text" class="form-control x319 in" autocomplete="off">
     			</div>
     			<div class="form-group">
-    				<label for="j_password" class="t">密　码：</label> <input id="j_password" value="" name="passwordhash" type="password" class="form-control x319 in">
+    				<label for="j_password" class="t">密　码：</label> <input id="j_password" value="" name="password" type="password" class="form-control x319 in">
     			</div>
-    			<div class="form-group">
-    				<label for="j_captcha" class="t">验证码：</label> <input id="j_captcha" name="j_captcha" type="text" class="form-control x164 in">
-    				<img id="captcha_img" alt="点击更换" title="点击更换" src="__PUBLIC__/bjui/images/captcha.jpeg" class="m">
-    			</div>
+
     			<div class="form-group">
                     <label class="t"></label>
                     <label for="j_remember" class="m"><input id="j_remember" type="checkbox" value="true">&nbsp;记住登陆账号!</label>
@@ -140,7 +136,6 @@ function choose_bg() {
     			<div class="form-group space">
                     <label class="t"></label>　　　
     				<input type="submit" id="login_ok" value="&nbsp;登&nbsp;录&nbsp;" class="btn btn-primary btn-lg">&nbsp;&nbsp;&nbsp;&nbsp;
-    				<input type="reset" value="&nbsp;重&nbsp;置&nbsp;" class="btn btn-default btn-lg">
     			</div>
     		</form>
         </div>

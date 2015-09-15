@@ -32,4 +32,9 @@ class AdminModel extends Model
 	{
 		return $this->m->where("id = {$id}")->delete($id);
 	}
+	
+	public function login($name,$password)
+	{
+		return $this->m->where("name = '{$name}' AND password = '{$password}'")->getField('id');
+	}
 }
